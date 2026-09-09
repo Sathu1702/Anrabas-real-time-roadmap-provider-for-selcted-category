@@ -561,6 +561,14 @@ main.container {
     background: rgba(10, 10, 25, 0.6);
 }
 
+.input-hint.error-hint {
+    color: #ffb300;
+    padding-top: 0;
+    background: none;
+    font-size: 0.73rem;
+    opacity: 0.9;
+}
+
 .roadmap {
     width: 100%;
 }
