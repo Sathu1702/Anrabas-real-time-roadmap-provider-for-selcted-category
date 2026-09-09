@@ -13,9 +13,19 @@ It is deployed directly from this repository, making updates fast and easy.
 You can view the website here: [Anrabas](https://sathu1702.github.io/Anrabas-real-time-roadmap-provider-for-selcted-category/)
 
 ## 🛠️ How It Works
-1. The source code is stored in this GitHub repository.  
-2. GitHub Pages automatically builds and publishes the site.  
-3. Any changes pushed to the main branch are reflected live.  
+**Can Do:**
+1. Generate step-by-step roadmaps for finance, health, career, relationships, education, home, and mental health problems
+2. Match keywords to predefined topics and return structured solutions
+3. Show quick-chips for common problems
+4. Track visitor stats (global + local device)
+5. Personalize with user's name and rename the bot
+
+**Cannot Do:**
+6. Understand natural language or handle follow-up questions
+7. Answer topics outside the 8 predefined categories
+8. Access real-time data or external APIs
+9. Maintain conversation memory or context
+10. Work in languages other than English
 
 ## 📄 License
 This project is open-source. Feel free to explore, learn, and adapt.
