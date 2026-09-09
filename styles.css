@@ -80,6 +80,13 @@ header::after {
     border: 1px solid rgba(0, 240, 255, 0.3);
     border-radius: 30px;
     padding: 0.35rem 0.5rem 0.35rem 0.9rem;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.logo {
+    white-space: nowrap;
 }
 
 .user-badge {
@@ -87,6 +94,7 @@ header::after {
     font-weight: 600;
     color: var(--neon-cyan);
     text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+    overflow-wrap: anywhere;
 }
 
 .user-btn {
@@ -184,7 +192,8 @@ main.container {
     display: flex;
     flex-direction: column;
     height: 620px;
-    height: min(620px, calc(100vh - 300px));
+    height: clamp(400px, calc(100vh - 240px), 620px);
+    height: clamp(400px, calc(100dvh - 240px), 620px);
 }
 
 .chat-header {
@@ -1185,8 +1194,8 @@ footer .container {
 
     .chat-shell {
         height: 560px;
-        height: min(560px, calc(100vh - 300px));
-        min-height: 420px;
+        height: clamp(420px, calc(100vh - 260px), 560px);
+        height: clamp(420px, calc(100dvh - 260px), 560px);
     }
 
     .message {
@@ -1242,8 +1251,19 @@ footer .container {
     }
 
     .chat-shell {
-        height: min(540px, calc(100vh - 220px));
-        min-height: 400px;
+        height: clamp(400px, calc(100vh - 220px), 540px);
+        height: clamp(400px, calc(100dvh - 220px), 540px);
+    }
+
+    .header-row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.7rem;
+    }
+
+    .header-user {
+        justify-content: center;
     }
 
     .chat-clock {
@@ -1321,8 +1341,8 @@ footer .container {
 /* Short screens / landscape phones: keep the chat usable */
 @media (max-height: 700px) and (min-width: 480px) {
     .chat-shell {
-        height: calc(100vh - 250px);
-        min-height: 360px;
+        height: clamp(360px, calc(100vh - 250px), 560px);
+        height: clamp(360px, calc(100dvh - 250px), 560px);
     }
 }
 
