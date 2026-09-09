@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anrabas - Real-Time Problem Solver</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container header-row">
+            <div>
+                <h1 class="logo">🚀 Anrabas</h1>
+                <p class="tagline">Your real-time life problem solver &amp; roadmap provider</p>
+            </div>
+            <div id="headerUser" class="header-user hidden">
+                <span class="user-badge">👤 <span id="headerUserName"></span></span>
+                <button id="logoutBtn" class="user-btn">Logout</button>
+            </div>
+            <button id="loginBtnAlt" class="user-btn login-link hidden">👤 Login</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h2>Describe your problem — get an instant roadmap</h2>
+            <p>Type your issue below. Anrabas analyzes it live and generates a step-by-step solution.</p>
+        </section>
+
+        <section class="chat-shell">
+            <div class="chat-header">
+                <span class="chat-status">
+                    <span class="status-dot"></span> <span id="botNameLabel">knowledge</span> — Online
+                </span>
+                <span class="chat-clock" id="chatClock"></span>
+            </div>
+
+            <div id="chatMessages" class="chat-messages"></div>
+
+            <div class="quick-chips" id="quickChips">
+                <button class="chip" data-q="I can't save money from my salary">💰 Can't save money</button>
+                <button class="chip" data-q="I keep procrastinating my important work">⏰ Keep procrastinating</button>
+                <button class="chip" data-q="I feel anxious about everyday things">🧘 Feel anxious</button>
+                <button class="chip" data-q="I want to switch my career">📈 Want a career change</button>
+                <button class="chip" data-q="I want to start eating healthy">🥗 Start eating healthy</button>
+            </div>
+
+            <form id="chatForm" class="chat-input-row">
+                <input type="text" id="chatInput" class="chat-input"
+                    placeholder="Type your problem here... (e.g. I need help managing stress)" autocomplete="off" required>
+                <button type="submit" class="btn-send">➤</button>
+            </form>
+
+            <p class="input-hint">Your problems are saved locally in your browser. Pick a category to organize them</p>
+        </section>
+
+        <section class="stats-bar">
+            <div class="stat-card">
+                <span class="stat-icon">👥</span>
+                <span class="stat-value" id="statVisitors">—</span>
+                <span class="stat-label">Total Visitors</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">🕐</span>
+                <span class="stat-value" id="statToday">—</span>
+                <span class="stat-label">Visitors Today</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">✅</span>
+                <span class="stat-value" id="statSolved">—</span>
+                <span class="stat-label">Problems Solved</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">💾</span>
+                <span class="stat-value" id="statLocal">0</span>
+                <span class="stat-label">Saved On This Device</span>
+            </div>
+        </section>
+        <p class="stats-note" id="statsNote">📡 Connecting to live counter…</p>
+
+        <div class="two-col">
+            <section class="saved-problems">
+                <h2>💾 Saved Problems</h2>
+                <p class="subtitle">Click any saved problem to re-generate its roadmap</p>
+                <div id="savedProblemsList" class="problems-list">
+                    <p class="empty-state">No problems saved yet. Ask Anrabas something above!</p>
+                </div>
+                <button id="clearAllBtn" class="btn-secondary hidden">Clear All Saved</button>
+            </section>
+
+            <section class="common-problems">
+                <h2>🔥 Popular Roadmaps</h2>
+                <p class="subtitle">Get instant solutions for common life challenges</p>
+                <div class="problems-grid">
+                    <div class="problem-card" data-problem="budget">
+                        <span class="icon">💰</span>
+                        <h3>Creating a Budget</h3>
+                        <p>Manage your money effectively</p>
+                    </div>
+                    <div class="problem-card" data-problem="procrastination">
+                        <span class="icon">⏰</span>
+                        <h3>Stop Procrastinating</h3>
+                        <p>End delay, start doing</p>
+                    </div>
+                    <div class="problem-card" data-problem="anxiety">
+                        <span class="icon">🧘</span>
+                        <h3>Managing Anxiety</h3>
+                        <p>Calm your mind now</p>
+                    </div>
+                    <div class="problem-card" data-problem="time">
+                        <span class="icon">📅</span>
+                        <h3>Time Management</h3>
+                        <p>Own your schedule</p>
+                    </div>
+                    <div class="problem-card" data-problem="fitness">
+                        <span class="icon">🏃</span>
+                        <h3>Start Your Fitness Journey</h3>
+                        <p>Begin a healthier you</p>
+                    </div>
+                    <div class="problem-card" data-problem="career">
+                        <span class="icon">📈</span>
+                        <h3>Career Change</h3>
+                        <p>Navigate your transition</p>
+                    </div>
+                    <div class="problem-card" data-problem="stress">
+                        <span class="icon">😤</span>
+                        <h3>Reduce Stress</h3>
+                        <p>Lower daily pressure</p>
+                    </div>
+                    <div class="problem-card" data-problem="sleep">
+                        <span class="icon">😴</span>
+                        <h3>Better Sleep</h3>
+                        <p>Sleep deep, wake fresh</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Anrabas — Real-time roadmaps. Your problems stay in your browser.</p>
+        </div>
+    </footer>
+
+    <div id="loginModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <span class="modal-emoji">🚀</span>
+            <h2>Welcome to Anrabas</h2>
+            <p>Log in to get a personalized experience and name the assistant.</p>
+            <input type="text" id="loginName" placeholder="Enter your name or username" maxlength="30" autocomplete="off">
+            <button id="loginBtn" class="login-btn">Enter Anrabas 🚀</button>
+            <button id="skipLoginBtn" class="modal-skip">Skip for now</button>
+        </div>
+    </div>
+
+    <div id="botModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <span class="modal-emoji">🤖</span>
+            <h2>Assistant name</h2>
+            <p id="botModalText">Do you want the chatbot to be called "username"?</p>
+            <button id="botYesBtn" class="btn-primary modal-btn">Yes, use my name</button>
+            <button id="botNoBtn" class="btn-secondary modal-btn">No, keep default</button>
+            <button id="botCloseBtn" class="modal-skip">✕ Skip (default name)</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
