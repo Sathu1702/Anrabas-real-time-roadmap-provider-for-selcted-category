@@ -184,6 +184,7 @@ main.container {
     display: flex;
     flex-direction: column;
     height: 620px;
+    height: min(620px, calc(100vh - 300px));
 }
 
 .chat-header {
@@ -1170,6 +1171,13 @@ footer .container {
     text-shadow: 0 0 8px rgba(0, 240, 255, 0.35);
 }
 
+@media (max-width: 900px) {
+    .chat-header {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+    }
+}
+
 @media (max-width: 760px) {
     .stats-bar {
         grid-template-columns: repeat(2, 1fr);
@@ -1177,10 +1185,24 @@ footer .container {
 
     .chat-shell {
         height: 560px;
+        height: min(560px, calc(100vh - 300px));
+        min-height: 420px;
     }
 
     .message {
         max-width: 98%;
+    }
+
+    .stat-card {
+        padding: 1rem 0.6rem;
+    }
+
+    .stat-value {
+        font-size: 1.7rem;
+    }
+
+    .stat-icon {
+        font-size: 1.25rem;
     }
 }
 
@@ -1195,5 +1217,122 @@ footer .container {
 
     .problems-grid {
         grid-template-columns: 1fr;
+    }
+
+    .logo {
+        font-size: 1.6rem;
+    }
+
+    header {
+        padding: 1.4rem 0;
+    }
+
+    .tagline {
+        font-size: 0.88rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h2 {
+        font-size: 1.1rem;
+    }
+
+    .hero p {
+        font-size: 0.85rem;
+    }
+
+    .chat-shell {
+        height: min(540px, calc(100vh - 220px));
+        min-height: 400px;
+    }
+
+    .chat-clock {
+        display: none;
+    }
+
+    .quick-chips {
+        padding: 0.6rem 0.8rem;
+        gap: 0.4rem;
+    }
+
+    .chip {
+        font-size: 0.72rem;
+        padding: 0.35rem 0.7rem;
+    }
+
+    .chat-input-row {
+        padding: 0.7rem 0.8rem;
+    }
+
+    .chat-input {
+        padding: 0.8rem 0.9rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-send {
+        width: 48px;
+        height: 48px;
+        font-size: 1.15rem;
+    }
+
+    .input-hint {
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+    }
+
+    .message {
+        max-width: 100%;
+    }
+
+    .bubble {
+        font-size: 0.85rem;
+        padding: 0.7rem 0.8rem;
+    }
+
+    .avatar {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        font-size: 0.85rem;
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+    }
+
+    .problem-card {
+        padding: 1rem;
+    }
+
+    .common-problems {
+        padding: 1.1rem;
+    }
+
+    .modal-card {
+        padding: 1.4rem;
+    }
+
+    .cat-list li {
+        padding: 0.45rem 0.6rem;
+        font-size: 0.88rem;
+    }
+}
+
+/* Short screens / landscape phones: keep the chat usable */
+@media (max-height: 700px) and (min-width: 480px) {
+    .chat-shell {
+        height: calc(100vh - 250px);
+        min-height: 360px;
+    }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
