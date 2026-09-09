@@ -15,11 +15,16 @@ You can view the website here: [Anrabas](https://sathu1702.github.io/Anrabas-rea
 5. Personalize with user's name and rename the bot
 
 **Cannot Do:**
-6. Understand natural language or handle follow-up questions
-7. Answer topics outside the 8 predefined categories
-8. Access real-time data or external APIs
-9. Maintain conversation memory or context
-10. Work in languages other than English
+1. Understand natural language or handle follow-up questions
+2. Answer topics outside the 8 predefined categories
+3. Access real-time data or external APIs
+4. Maintain conversation memory or context
+5. Work in languages other than English
+6. Handle images, files, or voice input
+7. Provide real personalized responses (same template for everyone)
+8. Ask clarifying questions to better understand problems
+9. Share or reveal internal system details
+10. Guarantee accuracy of generated roadmaps
 
 ## 📄 License
 This project is open-source. Feel free to explore, learn, and adapt.
