@@ -12,7 +12,7 @@
     <header>
         <div class="container header-row">
             <div>
-                <h1 class="logo">🚀 Anrabas</h1>
+                <h1 class="logo"><span class="logo-icon">🚀</span> Anrabas</h1>
                 <p class="tagline">Your real-time life problem solver &amp; roadmap provider</p>
             </div>
             <div id="headerUser" class="header-user hidden">
@@ -34,7 +34,11 @@
                 <span class="chat-status">
                     <span class="status-dot"></span> <span id="botNameLabel">knowledge</span> — Online
                 </span>
-                <span class="chat-clock" id="chatClock"></span>
+                <div class="chat-header-right">
+                    <span class="chat-lock" title="Conversation is private to this device">🔒 Private</span>
+                    <span class="chat-clock" id="chatClock"></span>
+                    <button id="clearChatBtn" class="chat-clear" title="Clear this conversation">🧹</button>
+                </div>
             </div>
 
             <div id="chatMessages" class="chat-messages"></div>
@@ -53,7 +57,7 @@
                 <button type="submit" class="btn-send">➤</button>
             </form>
 
-            <p class="input-hint">Your problems are saved locally in your browser. Pick a category to organize them</p>
+            <p class="input-hint">🔒 Your conversation is private to this device — never visible to other visitors.</p>
         </section>
 
         <section class="stats-bar">
@@ -73,24 +77,14 @@
                 <span class="stat-label">Problems Solved</span>
             </div>
             <div class="stat-card">
-                <span class="stat-icon">💾</span>
+                <span class="stat-icon">💬</span>
                 <span class="stat-value" id="statLocal">0</span>
-                <span class="stat-label">Saved On This Device</span>
+                <span class="stat-label">Questions Answered Here</span>
             </div>
         </section>
         <p class="stats-note" id="statsNote">📡 Connecting to live counter…</p>
 
-        <div class="two-col">
-            <section class="saved-problems">
-                <h2>💾 Saved Problems</h2>
-                <p class="subtitle">Click any saved problem to re-generate its roadmap</p>
-                <div id="savedProblemsList" class="problems-list">
-                    <p class="empty-state">No problems saved yet. Ask Anrabas something above!</p>
-                </div>
-                <button id="clearAllBtn" class="btn-secondary hidden">Clear All Saved</button>
-            </section>
-
-            <section class="common-problems">
+        <section class="common-problems">
                 <h2>🔥 Popular Roadmaps</h2>
                 <p class="subtitle">Get instant solutions for common life challenges</p>
                 <div class="problems-grid">
@@ -135,15 +129,29 @@
                         <p>Sleep deep, wake fresh</p>
                     </div>
                 </div>
-            </section>
-        </div>
+        </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Anrabas — Real-time roadmaps. Your problems stay in your browser.</p>
+            <p>&copy; 2026 Sathu — Anrabas. Real-time roadmaps. Your conversation stays private to this device.</p>
         </div>
     </footer>
+
+    <div id="privacyModal" class="modal-overlay privacy-overlay">
+        <div class="modal-card privacy-card">
+            <span class="modal-emoji">🔒</span>
+            <h2>Privacy Warning</h2>
+            <p class="privacy-warning-text">
+                ⚠️ <b>Never share sensitive or confidential information with this website.</b><br><br>
+                Do NOT enter passwords, OTP codes, bank or card details, ID numbers, addresses, or any
+                personal or confidential data — even in playful or "just testing" messages.<br><br>
+                Your chat stays private to your device, but this is a public website and we cannot
+                guarantee absolute security. Be careful and stay safe.
+            </p>
+            <button id="privacyOkBtn" class="login-btn">✅ I understand — Continue</button>
+        </div>
+    </div>
 
     <div id="loginModal" class="modal-overlay hidden">
         <div class="modal-card">
@@ -159,10 +167,24 @@
     <div id="botModal" class="modal-overlay hidden">
         <div class="modal-card">
             <span class="modal-emoji">🤖</span>
-            <h2>Assistant name</h2>
-            <p id="botModalText">Do you want the chatbot to be called "username"?</p>
-            <button id="botYesBtn" class="btn-primary modal-btn">Yes, use my name</button>
-            <button id="botNoBtn" class="btn-secondary modal-btn">No, keep default</button>
+            <h2>Name your assistant</h2>
+            <p id="botModalText">Do you want the chatbot to be called <b>username</b>?</p>
+            <div class="bot-options">
+                <button id="botYesBtn" class="bot-option bot-option-yes">
+                    <span class="bot-option-icon">✅</span>
+                    <span class="bot-option-block">
+                        <span class="bot-option-title">Yes, use my name</span>
+                        <span class="bot-option-sub">Make the assistant personal</span>
+                    </span>
+                </button>
+                <button id="botNoBtn" class="bot-option bot-option-no">
+                    <span class="bot-option-icon">🔒</span>
+                    <span class="bot-option-block">
+                        <span class="bot-option-title">No, keep default</span>
+                        <span class="bot-option-sub">Assistant stays "knowledge"</span>
+                    </span>
+                </button>
+            </div>
             <button id="botCloseBtn" class="modal-skip">✕ Skip (default name)</button>
         </div>
     </div>

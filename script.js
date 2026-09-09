@@ -1,25 +1,14 @@
 (function () {
     'use strict';
 
-    const STORAGE_KEY = 'anrabas_problems';
     const LOCAL_KEY = 'anrabas_local_counts';
-    const COUNTER_NS = 'anrabas-live';
-    const COUNTER_VISITORS = 'visitors';
-    const COUNTER_SOLVED = 'problems-solved';
+    const COUNTER_BASE = 'https://countapi.mileshilliard.com/api/v1';
+    const COUNTER_VISITORS = 'anrabas_sathu_total_visitors';
+    const COUNTER_TODAY_PREFIX = 'anrabas_sathu_today_';
+    const COUNTER_SOLVED = 'anrabas_sathu_total_solved';
     const USER_KEY = 'anrabas_user';
     const BOT_KEY = 'anrabas_bot_name';
     const DEFAULT_BOT = 'knowledge';
-
-    const CATEGORY_ICONS = {
-        finance: '💰', health: '🏥', career: '💼', relationships: '❤️',
-        education: '📚', home: '🏠', mental: '🧠', other: '📌'
-    };
-
-    const CATEGORY_LABELS = {
-        finance: 'Finance & Budget', health: 'Health & Fitness', career: 'Career & Work',
-        relationships: 'Relationships', education: 'Education & Learning',
-        home: 'Home & Organization', mental: 'Mental Health', other: 'Other'
-    };
 
     const TEMPLATES = {
         finance: {
@@ -227,9 +216,8 @@
     const chatForm = document.getElementById('chatForm');
     const chatInput = document.getElementById('chatInput');
     const quickChips = document.getElementById('quickChips');
-    const savedProblemsList = document.getElementById('savedProblemsList');
-    const clearAllBtn = document.getElementById('clearAllBtn');
     const chatClock = document.getElementById('chatClock');
+    const clearChatBtn = document.getElementById('clearChatBtn');
 
     function tickClock() {
         if (chatClock) {
@@ -318,12 +306,23 @@
         return 'dev-' + Math.random().toString(36).slice(2, 10);
     }
 
-    async function fetchCounter(action, key, amount) {
-        let url = 'https://api.countapi.xyz/' + action + '/' + COUNTER_NS + '/' + key;
-        if (amount) url += '?amount=' + amount;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('counter request failed');
-        return res.json();
+    function todayKey() {
+        return COUNTER_TODAY_PREFIX + new Date().toISOString().slice(0, 10);
+    }
+
+    async function counterGet(key) {
+        const res = await fetch(COUNTER_BASE + '/get/' + key);
+        if (!res.ok) throw new Error('counter get failed');
+        const data = await res.json();
+        if (!data || typeof data.value === 'undefined') throw new Error('counter get no value');
+        return data.value;
+    }
+
+    function counterHit(key) {
+        return fetch(COUNTER_BASE + '/hit/' + key).then(function (res) {
+            if (!res.ok) throw new Error('counter hit failed');
+            return res.json();
+        });
     }
 
     function refreshLiveStats() {
@@ -337,12 +336,13 @@
         if (localEl) localEl.textContent = local.solved;
 
         Promise.all([
-            fetchCounter('stats', COUNTER_VISITORS),
-            fetchCounter('stats', COUNTER_SOLVED)
-        ]).then(function (results) {
-            if (visitorsEl) visitorsEl.textContent = results[0].value.toLocaleString();
-            if (todayEl) todayEl.textContent = results[0].today.toLocaleString();
-            if (solvedEl) solvedEl.textContent = results[1].value.toLocaleString();
+            counterGet(COUNTER_VISITORS),
+            counterGet(todayKey()).catch(function () { return 0; }),
+            counterGet(COUNTER_SOLVED)
+        ]).then(function (values) {
+            if (visitorsEl) visitorsEl.textContent = values[0].toLocaleString();
+            if (todayEl) todayEl.textContent = values[1].toLocaleString();
+            if (solvedEl) solvedEl.textContent = values[2].toLocaleString();
             if (noteEl) {
                 noteEl.innerHTML = '🌍 <b>Live global counter</b> — updates every 30 seconds';
             }
@@ -358,45 +358,13 @@
 
     function registerVisit() {
         bumpLocalCount('visits');
-        fetchCounter('hit', COUNTER_VISITORS).catch(function () {});
+        counterHit(COUNTER_VISITORS).catch(function () {});
+        counterHit(todayKey()).catch(function () {});
     }
 
     function registerSolved() {
         bumpLocalCount('solved');
-        fetchCounter('hit', COUNTER_SOLVED).catch(function () {});
-    }
-
-    function getStoredProblems() {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            return raw ? JSON.parse(raw) : [];
-        } catch (e) {
-            return [];
-        }
-    }
-
-    function saveProblem(problem) {
-        try {
-            const problems = getStoredProblems();
-            problems.unshift(problem);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(problems));
-            return true;
-        } catch (e) {
-            alert('Could not save to your browser. Storage may be full.');
-            return false;
-        }
-    }
-
-    function clearAllProblems() {
-        try {
-            localStorage.removeItem(STORAGE_KEY);
-            renderSavedProblems();
-            addAssistantMessage('🧹 All saved problems were cleared from this browser.');
-        } catch (e) {}
-    }
-
-    function formatDate(ts) {
-        return new Date(ts).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        counterHit(COUNTER_SOLVED).catch(function () {});
     }
 
     function guessCategory(text) {
@@ -559,7 +527,8 @@
         const user = getUser();
         const botName = getBotName();
         let html = '<p>👋 ' + (user ? 'Welcome back, <b>' + escapeHtml(user.name) + '</b>!' : 'Hi there! 😊') + '</p>';
-        html += '<p>I\'m <b>' + escapeHtml(botName) + '</b>, your real-time problem solver. Tell me what\'s troubling you and I\'ll build a personalized roadmap.</p>';
+        html += '<p>I\'m <b>' + escapeHtml(botName) + '</b>, your real-time roadmap provider. Tell me a daily life problem and I\'ll build a clear, step-by-step plan in seconds.</p>';
+        html += '<p class="hint-line">Try: "I want to save money", "I keep procrastinating", or type "who are you?" to learn about me 🙂</p>';
         addAssistantMessage(html, true);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
@@ -568,6 +537,66 @@
         const topic = findTopic(text);
         const category = categoryHint || guessCategory(text);
         return buildRoadmap(topic, category, text);
+    }
+
+    const IDENTITY_RE = /who are you|what are you|tell me about yourself|what can you do|what do you do|are you a (robot|bot|human|real)|are you ai|are you an ai|is there a human|what is your name|your name|who made you|who built you|who created you|about anrabas|what is anrabas|are you chat ?gpt|how do you help|what do you help with|what shall i ask/i;
+
+    const CONFIDENTIAL_RE = /system prompt|your instructions|your (hidden )?code|source code|api key|secret|password|credentials|internal (info|details|systems)|how are you (built|made|developed)|how do you work (internally|technically|really)|reveal|bypass|settings|configuration|server|database|backend|storage|logs/i;
+
+    function getIdentityReply() {
+        const botName = getBotName();
+        const user = getUser();
+        const greet = user ? 'Hi <b>' + escapeHtml(user.name) + '</b>!' : 'Hi there!';
+        return {
+            tag: '🤖 About me',
+            html: greet + ' I\'m <b>' + escapeHtml(botName) + '</b> on the Anrabas platform &mdash; a real-time life problem solver &amp; roadmap provider.<br><br>Here\'s what I do:<ul style="margin-top:0.4rem">'
+                + '<li>Turn your daily life problems into clear, step-by-step roadmaps</li>'
+                + '<li>Instantly detect your topic &mdash; finance, health, career, relationships, education, home, mental wellbeing and more</li>'
+                + '<li>Give you practical tips, timelines, and common mistakes to avoid</li>'
+                + '<li>Keep your conversation private on your own device &mdash; it\'s never shared with others</li>'
+                + '</ul>That\'s me. What challenge can I build a roadmap for today? 🚀'
+        };
+    }
+
+    function getPrivacyReply() {
+        return {
+            tag: '🙅 Can\'t share that',
+            text: 'I can\'t share that — those details are private to the Anrabas system and outside what I\'m built for. I\'m a roadmap assistant: tell me a daily life problem (money, health, career, relationships, study, home, or mental health) and I\'ll give you a clear step-by-step plan instead!'
+        };
+    }
+
+    function detectIntent(text) {
+        const low = text.toLowerCase();
+        const conf = low.match(CONFIDENTIAL_RE);
+        if (conf) return 'confidential';
+        const id = low.match(IDENTITY_RE);
+        if (id && id[0].length + 12 >= low.length) return 'identity';
+        return 'roadmap';
+    }
+
+    function showInfoReply(intent) {
+        if (intent === 'confidential') {
+            const reply = getPrivacyReply();
+            const msg = addAssistantMessage('', false);
+            const bubble = msg.querySelector('.bubble');
+            const tag = document.createElement('div');
+            tag.className = 'ai-tag';
+            tag.textContent = reply.tag;
+            const t = document.createElement('div');
+            t.className = 'ai-text';
+            t.textContent = reply.text;
+            bubble.appendChild(tag);
+            bubble.appendChild(t);
+        } else {
+            const reply = getIdentityReply();
+            const msg = addAssistantMessage(reply.html, true);
+            const bubble = msg.querySelector('.bubble');
+            const tag = document.createElement('div');
+            tag.className = 'ai-tag';
+            tag.textContent = reply.tag;
+            bubble.insertBefore(tag, bubble.firstChild);
+        }
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
     function handleQuestion(text) {
@@ -579,6 +608,13 @@
 
         const analysisTime = 500 + Math.min(900, clean.length * 3);
         setTimeout(function () {
+            const intent = detectIntent(clean);
+            if (intent !== 'roadmap') {
+                typing.remove();
+                showInfoReply(intent);
+                return;
+            }
+
             typing.remove();
             const category = guessCategory(clean);
             const roadmap = solve(clean, category);
@@ -588,15 +624,6 @@
             bubble.appendChild(roadmap);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            const problem = {
-                id: Date.now(),
-                category: category,
-                text: clean.length > 200 ? clean.slice(0, 200) + '…' : clean,
-                timestamp: Date.now()
-            };
-            if (saveProblem(problem)) {
-                renderSavedProblems();
-            }
             registerSolved();
             const local = getLocalCounts();
             const localEl = document.getElementById('statLocal');
@@ -624,44 +651,6 @@
         card.addEventListener('click', function () {
             handleQuestion(this.dataset.problem);
         });
-    });
-
-    function renderSavedProblems() {
-        const problems = getStoredProblems();
-        savedProblemsList.innerHTML = '';
-        if (problems.length === 0) {
-            const empty = document.createElement('p');
-            empty.className = 'empty-state';
-            empty.textContent = 'No problems saved yet. Ask Anrabas something above!';
-            savedProblemsList.appendChild(empty);
-            clearAllBtn.classList.add('hidden');
-            return;
-        }
-        clearAllBtn.classList.remove('hidden');
-        problems.forEach(function (p) {
-            const item = document.createElement('div');
-            item.className = 'problem-item';
-            const cat = document.createElement('span');
-            cat.className = 'problem-category';
-            cat.textContent = (CATEGORY_ICONS[p.category] || '📌') + ' ' + (CATEGORY_LABELS[p.category] || 'Other');
-            const text = document.createElement('p');
-            text.className = 'problem-text';
-            text.textContent = p.text;
-            const date = document.createElement('p');
-            date.className = 'problem-date';
-            date.textContent = 'Saved ' + formatDate(p.timestamp);
-            item.appendChild(cat);
-            item.appendChild(text);
-            item.appendChild(date);
-            item.addEventListener('click', function () { handleQuestion(p.text); });
-            savedProblemsList.appendChild(item);
-        });
-    }
-
-    clearAllBtn.addEventListener('click', function () {
-        if (confirm('Clear ALL saved problems from this browser?')) {
-            clearAllProblems();
-        }
     });
 
     const loginModal = document.getElementById('loginModal');
@@ -774,24 +763,34 @@
         showLoginModal();
     });
 
-    window.addEventListener('storage', function (e) {
-        if (e.key === STORAGE_KEY) renderSavedProblems();
+    clearChatBtn.addEventListener('click', function () {
+        renderWelcome();
     });
 
     registerVisit();
     refreshLiveStats();
     setInterval(refreshLiveStats, 30000);
 
-    updateBotNameUI();
-    const existingUser = getUser();
-    if (existingUser) {
-        applyLoggedInUI(existingUser.name);
-        renderWelcome();
-    } else {
-        renderWelcome();
-        skipLoginBtn.disabled = false;
-        showLoginModal();
+    const privacyModal = document.getElementById('privacyModal');
+    const privacyOkBtn = document.getElementById('privacyOkBtn');
+
+    function startSession() {
+        updateBotNameUI();
+        const existingUser = getUser();
+        if (existingUser) {
+            applyLoggedInUI(existingUser.name);
+            renderWelcome();
+        } else {
+            renderWelcome();
+            skipLoginBtn.disabled = false;
+            showLoginModal();
+        }
     }
 
-    renderSavedProblems();
+    privacyOkBtn.addEventListener('click', function () {
+        privacyModal.classList.add('hidden');
+        startSession();
+    });
+
+    privacyModal.classList.remove('hidden');
 })();
