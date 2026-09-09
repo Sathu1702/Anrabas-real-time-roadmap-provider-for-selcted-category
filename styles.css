@@ -279,10 +279,51 @@ main.container {
 }
 
 .cat-hint {
+    display: block;
     color: var(--text-secondary);
     font-weight: 400;
     font-size: 0.8em;
     opacity: 0.85;
+    margin-top: 0.15rem;
+}
+
+.cat-msg-title {
+    margin: 0.8rem 0 0.4rem !important;
+}
+
+.cat-msg-foot {
+    margin: 0.8rem 0 0.2rem !important;
+    font-size: 0.88rem;
+}
+
+.cat-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+}
+
+.cat-list li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: rgba(0, 240, 255, 0.05);
+    border: 1px solid rgba(0, 240, 255, 0.14);
+    border-left: 3px solid var(--neon-cyan);
+    border-radius: 10px;
+    padding: 0.5rem 0.7rem;
+    line-height: 1.45;
+    text-align: left;
+}
+
+.cat-list li b {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+}
+
+.cat-item-icon {
+    margin-right: 0.1rem;
 }
 
 .ai-text {

@@ -553,11 +553,12 @@
     ];
 
     function getUnsupportedReply() {
-        let html = 'Hmm, that topic isn\'t one of my core categories yet &mdash; and I want to give you a real roadmap, not a guess. 🙏<br><br><b>I currently build roadmaps for these categories:</b><ul style="margin-top:0.4rem">';
+        let html = '<p>Hmm, that topic isn\'t one of my core categories yet &mdash; and I want to give you a real roadmap, not a guess. 🙏</p>';
+        html += '<p class="cat-msg-title"><b>I currently build roadmaps for these categories:</b></p><ul class="cat-list">';
         CATEGORY_DEFS.forEach(function (c) {
-            html += '<li>' + c.emoji + ' <b>' + c.name + '</b> <span class="cat-hint">(' + c.tags + ')</span></li>';
+            html += '<li><span class="cat-item-icon">' + c.emoji + '</span> <b>' + c.name + '</b><br><span class="cat-hint">(' + c.tags + ')</span></li>';
         });
-        html += '</ul>Try asking about one of those &mdash; for example: <i>"I want to save money"</i> or <i>"I feel stressed"</i> 🚀';
+        html += '</ul><p class="cat-msg-foot">Try asking about one of those &mdash; for example: <i>"I want to save money"</i> or <i>"I feel stressed"</i> 🚀</p>';
         return html;
     }
 
