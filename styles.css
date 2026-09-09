@@ -278,6 +278,13 @@ main.container {
     text-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
 }
 
+.cat-hint {
+    color: var(--text-secondary);
+    font-weight: 400;
+    font-size: 0.8em;
+    opacity: 0.85;
+}
+
 .ai-text {
     font-size: 0.9rem;
     color: var(--text-primary);

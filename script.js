@@ -383,8 +383,7 @@
                 if (low.includes(w)) return c.cat;
             }
         }
-        const cat = low.includes('job') ? 'career' : 'other';
-        return cat;
+        return null;
     }
 
     function findTopic(text) {
@@ -543,6 +542,25 @@
 
     const CONFIDENTIAL_RE = /system prompt|your instructions|your (hidden )?code|source code|api key|secret|password|credentials|internal (info|details|systems)|how are you (built|made|developed)|how do you work (internally|technically|really)|reveal|bypass|settings|configuration|server|database|backend|storage|logs/i;
 
+    const CATEGORY_DEFS = [
+        { emoji: '💰', name: 'Finance & Money', tags: 'saving, budgeting, debt, salary, bills, rent' },
+        { emoji: '❤️', name: 'Health & Fitness', tags: 'fitness, weight, diet, exercise, sleep, pain' },
+        { emoji: '💼', name: 'Career & Work', tags: 'job, interviews, promotion, resume, office' },
+        { emoji: '👥', name: 'Relationships', tags: 'friends, family, partner, marriage, parents' },
+        { emoji: '📚', name: 'Education & Study', tags: 'exams, school, college, learning, courses' },
+        { emoji: '🏠', name: 'Home & Routine', tags: 'cleaning, organizing, tidying, moving, space' },
+        { emoji: '🧠', name: 'Mental Wellbeing', tags: 'stress, anxiety, motivation, burnout, mood' }
+    ];
+
+    function getUnsupportedReply() {
+        let html = 'Hmm, that topic isn\'t one of my core categories yet &mdash; and I want to give you a real roadmap, not a guess. 🙏<br><br><b>I currently build roadmaps for these categories:</b><ul style="margin-top:0.4rem">';
+        CATEGORY_DEFS.forEach(function (c) {
+            html += '<li>' + c.emoji + ' <b>' + c.name + '</b> <span class="cat-hint">(' + c.tags + ')</span></li>';
+        });
+        html += '</ul>Try asking about one of those &mdash; for example: <i>"I want to save money"</i> or <i>"I feel stressed"</i> 🚀';
+        return html;
+    }
+
     function getIdentityReply() {
         const botName = getBotName();
         const user = getUser();
@@ -617,6 +635,16 @@
 
             typing.remove();
             const category = guessCategory(clean);
+            if (category === null && !findTopic(clean)) {
+                const msg = addAssistantMessage(getUnsupportedReply(), true);
+                const bubble = msg.querySelector('.bubble');
+                const tag = document.createElement('div');
+                tag.className = 'ai-tag';
+                tag.textContent = '🗂️ Available categories';
+                bubble.insertBefore(tag, bubble.firstChild);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                return;
+            }
             const roadmap = solve(clean, category);
             const msg = addAssistantMessage('', false);
             const bubble = msg.querySelector('.bubble');
