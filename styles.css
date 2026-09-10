@@ -567,19 +567,21 @@ main.container {
     text-align: center;
     color: var(--text-muted);
     font-size: 0.75rem;
-    padding: 0.3rem 1.2rem 0.9rem;
+    padding: 0.5rem 1.2rem;
     background: rgba(10, 10, 25, 0.6);
+    line-height: 1.5;
 }
 
 .input-hint.error-hint {
     color: #ffb300;
-    padding: 0.6rem 1.2rem;
-    background: rgba(10, 10, 25, 0.6);
+    padding: 0.5rem 1.2rem;
+    background: rgba(255, 179, 0, 0.06);
+    border: 1px solid rgba(255, 179, 0, 0.2);
+    border-radius: 8px;
+    margin: 0 1.2rem 0.6rem;
     font-size: 0.73rem;
-    opacity: 0.9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    opacity: 0.95;
+    line-height: 1.5;
 }
 
 .roadmap {
