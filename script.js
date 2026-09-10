@@ -618,7 +618,7 @@
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    function handleQuestion(text) {
+    async function handleQuestion(text) {
         const clean = text.trim();
         if (!clean) return;
 

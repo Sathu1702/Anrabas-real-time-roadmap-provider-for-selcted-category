@@ -1,6 +1,6 @@
-# My Live Website
+# Anrabas - Real-Time Problem Solver
 
-This is my personal/project website, hosted using **GitHub Pages**.  
+This is a real-time life problem solver and roadmap provider website, hosted using **GitHub Pages**.  
 It is deployed directly from this repository, making updates fast and easy.
 
 ## 🌐 Live Site

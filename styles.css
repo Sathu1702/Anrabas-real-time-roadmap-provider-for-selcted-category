@@ -573,8 +573,8 @@ main.container {
 
 .input-hint.error-hint {
     color: #ffb300;
-    padding-top: 0;
-    background: none;
+    padding: 0.3rem 1.2rem 0.9rem;
+    background: rgba(10, 10, 25, 0.6);
     font-size: 0.73rem;
     opacity: 0.9;
 }
