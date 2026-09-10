@@ -191,9 +191,8 @@ main.container {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 620px;
-    height: clamp(400px, calc(100vh - 240px), 620px);
-    height: clamp(400px, calc(100dvh - 240px), 620px);
+    height: 70vh;
+    height: clamp(480px, calc(100dvh - 150px), 820px);
 }
 
 .chat-header {
@@ -1197,9 +1196,7 @@ footer .container {
     }
 
     .chat-shell {
-        height: 560px;
-        height: clamp(420px, calc(100vh - 260px), 560px);
-        height: clamp(420px, calc(100dvh - 260px), 560px);
+        height: clamp(480px, calc(100dvh - 140px), 720px);
     }
 
     .message {
@@ -1255,8 +1252,7 @@ footer .container {
     }
 
     .chat-shell {
-        height: clamp(400px, calc(100vh - 220px), 540px);
-        height: clamp(400px, calc(100dvh - 220px), 540px);
+        height: clamp(460px, calc(100dvh - 120px), 680px);
     }
 
     .header-row {
@@ -1345,8 +1341,7 @@ footer .container {
 /* Short screens / landscape phones: keep the chat usable */
 @media (max-height: 700px) and (min-width: 480px) {
     .chat-shell {
-        height: clamp(360px, calc(100vh - 250px), 560px);
-        height: clamp(360px, calc(100dvh - 250px), 560px);
+        height: clamp(420px, calc(100dvh - 130px), 640px);
     }
 }
 
