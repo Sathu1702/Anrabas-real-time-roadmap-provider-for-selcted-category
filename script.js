@@ -132,78 +132,269 @@
     };
 
     const TOPICS = [
-        { id: 'budget', match: ['save', 'saving', 'budget', 'expense', 'spend', 'money', 'poor', 'broke', 'salary', 'debt', 'loan', 'payment', 'finance', 'rent'], category: 'finance', icon: '💰', summary: 'Money management & budgeting detected', steps: [
-                'Open one sheet and list income vs spending over the last 30 days',
-                'Rank expenses and cut the biggest 3 leaks immediately',
-                'Adopt the 50/30/20 split (needs / wants / savings)',
-                'Set an automatic transfer to savings on payday',
-                'Tackle high-interest debt first with the avalanche or snowball method',
-                'Review your budget every Sunday for 10 minutes'
-            ], mistakes: ['Chasing unattainable frugality', 'Not tracking small recurring charges', 'Skipping the emergency fund'], timeline: 'Cash flow visible in 1 week, breathing room in 1-2 months', tip: 'You can\'t manage what you don\'t measure. Start tracking today.' },
-        { id: 'procrastination', match: ['procrastinat', 'delay', 'lazy', "can't start", 'dont start', 'putting off', 'avoid', 'unmotivated', 'distracted', 'focus'], category: 'other', icon: '⏰', summary: 'Motivation & focus barriers detected', steps: [
-                'Shrink the task: commit to just 5 minutes — momentum does the rest',
-                'Apply the 2-minute rule for tiny tasks: do it instantly',
-                'Move your phone out of reach before starting',
-                'Work in 25-minute sprints with 5-minute breaks (Pomodoro)',
-                'Write a done-list, not just a to-do list, to fuel motivation',
-                'Remove decision fatigue: decide tonight what you\'ll do tomorrow'
-            ], mistakes: ['Waiting to "feel ready"', 'Multitasking during sprints', 'Planning endlessly, executing never'], timeline: 'Winning streaks in 1 week, new identity in 30 days', tip: 'Start before you feel ready. Action creates motivation — not the other way around.' },
-        { id: 'anxiety', match: ['anxiety', 'anxious', 'stress', 'nervous', 'overthink', 'worry', 'panic', 'scared', 'fear', 'tense'], category: 'mental', icon: '🧘', summary: 'Anxiety or worry patterns detected', steps: [
-                'Recognize the physical cues: racing heart, shallow breath, tension',
-                'Calm your nervous system: 4-7-8 breathing for 4 rounds',
-                'Ground yourself with 5-4-3-2-1 (see / touch / hear / smell / taste)',
-                'Write worries out; separate facts from "what-if" thoughts',
-                'Move your body daily and cut caffeine after noon',
-                'If it runs daily for 2+ weeks, talk to a professional'
-            ], mistakes: ['Suppressing feelings instead of processing them', 'Doom-scrolling at night', 'Skipping sleep and exercise'], timeline: 'Toolkit ready in 1 week, calmer baseline in 4-6 weeks', tip: 'Anxiety is a loud signal, not a verdict. Breathe, ground, and take the next small step.' },
-        { id: 'time', match: ['time', 'busy', 'overwhelmed', 'overwhelm', 'schedule', 'organi', 'priority', 'productive', 'deadline', 'multitask'], category: 'other', icon: '📅', summary: 'Time & productivity challenges detected', steps: [
-                'Pick your top 3 tasks each morning — the rest can wait',
-                'Time-block your calendar: assign hours, not just lists',
-                'Batch similar work: emails, calls, and errands in one block',
-                'Protect a 90-minute deep-focus block daily (phone away)',
-                'Say no to low-value requests that hijack your day',
-                'Plan tomorrow\'s priorities tonight, before you log off'
-            ], mistakes: ['Saying yes to everything', 'Skipping breaks entirely', 'Re-planning instead of working'], timeline: 'More control in 2-3 days, an extra 10+ hours/week in a month', tip: 'Effectiveness beats busy-ness. Work on the few tasks that actually matter.' },
-        { id: 'fitness', match: ['fitness', 'gym', 'weight', 'fat', 'workout', 'exercise', 'diet', 'shape', 'muscle', 'slim', 'gain', 'obese', 'unhealthy'], category: 'health', icon: '🏃', summary: 'Fitness & body-goal signals detected', steps: [
-                'Lock the goal: stamina, strength, weight loss, or energy',
-                'Create two daily anchors: 7-8h sleep and 2-3L of water',
-                'Move for 20-30 minutes daily — walking counts, consistency rules',
-                'Add 2-3 strength sessions weekly (squats, push-ups, lunges)',
-                'Swap one unhealthy meal or snack weekly — gradual wins stick',
-                'Measure with photos and energy levels, not only the scale'
-            ], mistakes: ['All-or-nothing crash programs', 'Neglecting sleep and water', 'Comparing to fitness influencers'], timeline: 'Energy in 1 week, visible change in 4-8 weeks', tip: 'Fitness is a system, not a sprint. Small daily reps build a stronger life.' },
-        { id: 'career', match: ['career', 'job', 'work', 'promotion', 'interview', 'resume', 'employ', 'profession', 'quit', 'hire', 'salary raise', 'unemployed', 'laid off'], category: 'career', icon: '💼', summary: 'Career and work transition detected', steps: [
-                'Define the target role or industry in one sentence',
-                'List your transferable skills and evidence for each',
-                'Close one skill gap with a free course or mini-project',
-                'Run 3 informational interviews with people in the field',
-                'Refresh your resume and LinkedIn to match the target',
-                'Send 5 tailored applications and iterate on feedback'
-            ], mistakes: ['Waiting for the perfect resume', 'Networking only when you need something', 'Rejecting yourself before applying'], timeline: 'Target defined in 1 week, interviews in 3-8 weeks', tip: 'Your next chapter is built from small, brave moves — not one giant leap.' },
-        { id: 'stress', match: ['stress', 'burnout', 'exhausted', 'tired', 'overload', 'pressure', 'deadline stress', 'workload'], category: 'mental', icon: '😤', summary: 'Stress and pressure signals detected', steps: [
-                'Audit your stressors for 3 days: what drains vs fuels you',
-                'Protect 1 hour of true recovery daily (sleep, walk, hobby)',
-                'Set a hard "off" time for work/screen each night',
-                'Delegate or decline one low-value responsibility this week',
-                'Use a brain-dump list to clear mental noise before bed',
-                'If exhaustion persists, check sleep, bloodwork, or counseling'
-            ], mistakes: ['Decompressing with more screens', 'Skipping meals and sleep under pressure', 'Trying to do it all alone'], timeline: 'Lighter within days, sustainable rhythm in 3-4 weeks', tip: 'Stress is not a badge. Rest is a strategy, not a reward.' },
-        { id: 'sleep', match: ['sleep', 'insomnia', 'awake', 'tired morning', 'cant sleep', 'rest', 'night'], category: 'health', icon: '😴', summary: 'Sleep quality issues detected', steps: [
-                'Set a fixed bedtime and wake time — yes, weekends too',
-                'Keep screens out of bed; try reading or audio instead',
-                'Make the room dark and cool (18-20°C)',
-                'Cut caffeine after 2pm and food 3 hours before bed',
-                'Do a gentle wind-down routine: stretch, breathe, plan tomorrow',
-                'Lying awake 20+ min? Get up, do something boring, return when sleepy'
-            ], mistakes: ['Phone scrolling to "relax"', 'Catching up on weekend with 12-hour sleeps', 'Exercising right before bed'], timeline: 'Better nights in 1 week, full repair in 3-4 weeks', tip: 'Your best self is built at night. Guard your sleep like an appointment with a VIP.' },
-        { id: 'eating', match: ['eat', 'healthy', 'junk', 'food', 'meal', 'nutrition', 'cook', 'snack', 'lose weight', 'hungry'], category: 'health', icon: '🥗', summary: 'Eating and nutrition habits detected', steps: [
-                'Identify your worst 2 eating moments (late-night snacks? skip breakfast?)',
-                'Prep one healthy meal or snack in advance each day',
-                'Add vegetables and protein to every meal — crowd out junk',
-                'Swap sugary drinks for water or unsweetened tea',
-                'Eat mindfully: plate food, sit down, slow down',
-                'Plan one weekly grocery list instead of impulse buying'
-            ], mistakes: ['Extreme detox diets', 'Relying on willpower alone', 'Drinking calories unknowingly'], timeline: 'Energy in 1 week, better habits in a month', tip: 'Eat like you\'re fueling a person you truly care about — because you are.' }
+        // ═══════════════════════ FINANCE ═══════════════════════
+        { id: 'saving', match: ['save', 'saving', 'savings', 'cant save', "can't save", 'money left', 'no savings'], category: 'finance', icon: '💰', summary: 'Saving money — let\'s fix your cash flow', steps: [
+            'Track every rupee/dollar for 7 days using a notes app — know where money goes',
+            'Identify your top 3 unnecessary expenses and cut them this week',
+            'Open a separate savings account — keep it out of sight, out of mind',
+            'Set a fixed % to transfer the day salary arrives (even 10% counts)',
+            'Use the 24-hour rule: wait a day before any non-essential purchase over $20',
+            'Review your savings progress every Sunday and adjust'
+            ], mistakes: ['Waiting until month-end to save what\'s left', 'Cutting all fun — burnout leads to splurging', 'Not automating the transfer'], timeline: 'Savings visible in 2-3 weeks, habit built in 60 days', tip: 'Pay yourself first. Save before you spend, not after.' },
+        { id: 'budget', match: ['budget', 'budgeting', 'plan my money', 'money plan', 'expense track', 'spending track'], category: 'finance', icon: '📋', summary: 'Budgeting — take control of every dollar', steps: [
+            'List all sources of monthly income (salary, side work, any other)',
+            'Categorize last month\'s expenses: needs / wants / savings',
+            'Apply the 50/30/20 rule: 50% needs, 30% wants, 20% savings',
+            'Set a daily spending limit based on your weekly budget',
+            'Use a free budgeting app or spreadsheet to log every transaction',
+            'Do a weekly 10-minute check-in every Sunday to stay on track'
+            ], mistakes: ['Making a budget you never check again', 'Forgetting irregular expenses (insurance, festivals)', 'Being too strict — a budget you quit is worse than none'], timeline: 'Clarity in 1 week, control in 1 month', tip: 'A budget isn\'t a cage — it\'s a plan that gives you freedom.' },
+        { id: 'debt', match: ['debt', 'loan', 'emi', 'credit card', 'borrow', 'owe', 'repay', 'interest', 'pay off', 'paying off'], category: 'finance', icon: '🔗', summary: 'Debt management — break free from loans', steps: [
+            'List every debt: amount, interest rate, minimum payment, lender',
+            'Pay minimums on all debts, then throw extra money at the highest-interest one (avalanche method)',
+            'If you need quick wins, try snowball: pay off the smallest debt first for momentum',
+            'Call your lender and negotiate a lower interest rate — it works more often than you think',
+            'Stop adding new debt: hide credit cards or freeze them in ice',
+            'Set a debt-free target date and celebrate milestones along the way'
+            ], mistakes: ['Only paying minimums forever', 'Taking new loans to pay old ones', 'Ignoring the debt and hoping it goes away'], timeline: 'First debt gone in 1-3 months, full freedom in 12-36 months', tip: 'Every debt paid is a chain broken. Start with the smallest one if you need momentum.' },
+        { id: 'salary', match: ['salary', 'income', 'earn', 'not enough money', 'low pay', 'underpaid', 'need more income', 'side income', 'passive income'], category: 'finance', icon: '📈', summary: 'Income growth — earn more than you spend', steps: [
+            'Calculate your exact monthly shortfall — know the gap between income and expenses',
+            'Cut expenses first: find at least 3 quick wins (subscriptions, eating out, impulse buys)',
+            'Research 2-3 side income options matching your skills (freelancing, tutoring, reselling)',
+            'Dedicate 1 hour daily to building a side income stream',
+            'Negotiate your current salary: gather evidence of your contributions and ask',
+            'Invest in a skill that increases your market value (course, certification, portfolio)'
+            ], mistakes: ['Ignoring expenses and only focusing on income', 'Starting 5 side hustles at once', 'Not tracking the new income properly'], timeline: 'Expense cuts in 1 week, side income in 1-2 months, salary growth in 3-6 months', tip: 'The gap between income and expenses is where your freedom lives. Widen it from both sides.' },
+        { id: 'impulse', match: ['impulse', 'overspend', 'cant stop buying', 'shopping', 'addiction', 'waste money', 'bought useless', 'regret buying', 'retail therapy'], category: 'finance', icon: '🛒', summary: 'Impulse spending — break the buying cycle', steps: [
+            'Delete shopping apps and remove saved card details from websites',
+            'Apply the 30-day rule: write the item down, wait 30 days, still want it?',
+            'Unsubscribe from promotional emails and unfollow sale accounts',
+            'Calculate the hourly cost of items: "Is this worth X hours of my work?"',
+            'Find a non-spending replacement for your trigger (walk, journal, call a friend)',
+            'Set a fun money budget — a small guilt-free amount each month'
+            ], mistakes: ['Blaming willpower alone — change your environment instead', 'Rationalizing purchases as "investments"', 'Keeping subscriptions you "might use someday"'], timeline: 'Trigger awareness in 1 week, new habits in 30 days', tip: 'Every purchase is a trade: you\'re trading hours of your life for that thing. Make it count.' },
+        // ═══════════════════════ HEALTH ═══════════════════════
+        { id: 'weight_loss', match: ['lose weight', 'weight loss', 'fat', 'belly', 'slim', 'obese', 'overweight', 'thin', 'shed weight', 'cut weight'], category: 'health', icon: '⚖️', summary: 'Weight loss — sustainable fat loss plan', steps: [
+            'Calculate your maintenance calories and eat 300-500 less per day (no crash diets)',
+            'Prioritize protein at every meal — it keeps you full and preserves muscle',
+            'Walk 8,000-10,000 steps daily — low-effort, high-impact fat burning',
+            'Add 2-3 strength training sessions per week to boost metabolism',
+            'Sleep 7-8 hours — poor sleep increases hunger hormones by up to 25%',
+            'Weigh yourself once a week, same time, same conditions — trend matters, not daily fluctuations'
+            ], mistakes: ['Extreme calorie restriction (leads to binge later)', 'Only doing cardio and skipping strength', 'Expecting more than 0.5-1 kg loss per week'], timeline: 'Noticeable change in 2-3 weeks, transformation in 3 months', tip: 'Weight loss is 80% nutrition. You can\'t outrun a bad diet.' },
+        { id: 'muscle_gain', match: ['muscle', 'gain weight', 'bulk', 'build body', 'gain mass', 'weak', 'skinny', 'no muscle', 'tone up', 'strength'], category: 'health', icon: '💪', summary: 'Muscle building — get stronger step by step', steps: [
+            'Start with compound exercises: squats, deadlifts, bench press, rows, overhead press',
+            'Train each muscle group 2x per week with progressive overload',
+            'Eat in a slight calorie surplus (200-300 above maintenance) with 1.6-2g protein per kg bodyweight',
+            'Sleep 7-9 hours — muscle grows during rest, not in the gym',
+            'Track your lifts: if numbers go up, you\'re building muscle',
+            'Be consistent for 12 weeks minimum before judging results'
+            ], mistakes: ['Eating too much and gaining mostly fat', 'Program hopping every 2 weeks', 'Skipping legs and only training upper body'], timeline: 'Strength gains in 2-3 weeks, visible muscle in 8-12 weeks', tip: 'Muscle is built with food and rest, not just gym time. Feed your gains.' },
+        { id: 'fitness_general', match: ['fitness', 'gym', 'workout', 'exercise', 'get fit', 'shape', 'out of shape', 'unhealthy', 'start working out'], category: 'health', icon: '🏃', summary: 'Getting fit — start your fitness journey', steps: [
+            'Start with 20 minutes of walking daily — build the habit before intensity',
+            'Try 2 bodyweight workouts per week (push-ups, squats, planks)',
+            'Set a specific goal: run 5K, do 20 push-ups, or work out 4x/week',
+            'Find a workout buddy or follow a free YouTube program for accountability',
+            'Prep workout clothes the night before — remove friction',
+            'Track progress with photos and energy levels, not just the scale'
+            ], mistakes: ['Going from 0 to 6 days at the gym immediately', 'Waiting for "motivation" instead of building discipline', 'Comparing your week 1 to someone else\'s year 3'], timeline: 'Energy boost in 1 week, visible fitness in 4-8 weeks', tip: 'The best workout is the one you actually do. Start embarrassingly small.' },
+        { id: 'eating_healthy', match: ['eat healthy', 'healthy eating', 'junk food', 'food', 'meal', 'nutrition', 'cook', 'snack', 'diet', 'clean eating', 'processed food'], category: 'health', icon: '🥗', summary: 'Healthy eating — transform your diet', steps: [
+            'Audit your current diet for 3 days — write down everything you eat',
+            'Add one serving of vegetables to lunch and dinner immediately',
+            'Meal prep on Sundays: cook 2-3 base meals for the week ahead',
+            'Swap sugary drinks for water, herbal tea, or black coffee',
+            'Keep healthy snacks visible (fruit, nuts) and hide junk food',
+            'Follow the 80/20 rule: eat nutritious food 80% of the time, enjoy treats 20%'
+            ], mistakes: ['Going on extreme elimination diets', 'Meal prepping 7 days and burning out', 'Ignoring portion sizes even with healthy food'], timeline: 'Energy shifts in 1 week, taste buds adjust in 2-3 weeks, habits locked in 60 days', tip: 'Healthy eating isn\'t about perfection. It\'s about consistently choosing better.' },
+        // ═══════════════════════ CAREER ═══════════════════════
+        { id: 'job_switch', match: ['switch job', 'change job', 'new job', 'quit job', 'leave job', 'resign', 'job change', 'another job', 'better job'], category: 'career', icon: '🔄', summary: 'Job switch — plan your next move', steps: [
+            'Define WHY you want to switch: bad boss? low pay? no growth? wrong field?',
+            'Research 3-5 roles that fit your skills and interests',
+            'Identify skill gaps and fill one with a free course or project within 30 days',
+            'Update your resume and LinkedIn to target the new role — not the old one',
+            'Reach out to 5 people in the target field for casual chats (informational interviews)',
+            'Apply to 10+ roles while still employed — negotiate from strength, not desperation'
+            ], mistakes: ['Quitting without a plan or savings', 'Applying to random jobs without focus', 'Bad-mouthing your current employer in interviews'], timeline: 'Target defined in 1 week, interviews in 4-8 weeks, new role in 2-4 months', tip: 'Don\'t run from your current job — run toward your next one.' },
+        { id: 'promotion', match: ['promotion', 'raise', 'salary increase', 'advance', 'grow in role', 'become manager', 'next level', 'appraisal'], category: 'career', icon: '🎯', summary: 'Promotion — position yourself for the next level', steps: [
+            'List the exact requirements for the role above yours (ask your manager or HR)',
+            'Do your current job at the next level for 30 days before asking',
+            'Track your achievements: document every win, metric, and project you\'ve led',
+            'Request a 1-on-1 and present your case with data, not feelings',
+            'Ask: "What specific steps do I need to take to earn a promotion?"',
+            'If blocked, explore the same level at another company — lateral moves can be promotions'
+            ], mistakes: ['Waiting to be noticed instead of making your work visible', 'Complaining instead of presenting solutions', 'Expecting a promotion for tenure alone, not performance'], timeline: 'Visibility in 2-4 weeks, promotion case in 1-3 months, promotion in 3-6 months', tip: 'Promotions go to those who do the next job before they have it.' },
+        { id: 'interview_prep', match: ['interview', 'interview prep', 'interview tips', 'job interview', 'crack interview', 'interview nervous', ' interview scared'], category: 'career', icon: '🎤', summary: 'Interview prep — ace your next interview', steps: [
+            'Research the company deeply: mission, recent news, competitors, culture',
+            'Prepare STAR stories (Situation, Task, Action, Result) for 5 common questions',
+            'Practice out loud — record yourself and fix filler words and rambling',
+            'Prepare 3 thoughtful questions to ask THEM (shows genuine interest)',
+            'Do a mock interview with a friend or use free AI interview tools',
+            'Arrive 10 minutes early, dress one level above their dress code'
+            ], mistakes: ['Memorizing robotic answers instead of natural conversation', 'Not asking questions at the end', 'Talking negatively about past employers'], timeline: 'Confidence built in 1 week, interview-ready in 2 weeks', tip: 'Interviews are conversations, not interrogations. Show them who you are, not just what you know.' },
+        { id: 'resume', match: ['resume', 'cv', 'linkedin', 'portfolio', 'cover letter', 'job application', 'job profile', 'personal brand'], category: 'career', icon: '📄', summary: 'Resume & profile — stand out from the pile', steps: [
+            'Use a clean, single-page resume template (no fancy designs for most fields)',
+            'Start each bullet with a strong action verb: built, led, increased, reduced, launched',
+            'Quantify everything: "Increased sales by 25%" beats "Responsible for sales"',
+            'Tailor your resume for each job — mirror their keywords in your summary',
+            'Optimize LinkedIn: professional photo, compelling headline, detailed experience',
+            'Ask 2 people in your field to review and give honest feedback'
+            ], mistakes: ['Using the same resume for every application', 'Listing duties instead of achievements', 'Ignoring LinkedIn — recruiters check it first'], timeline: 'Resume improved in 2-3 days, LinkedIn optimized in 1 week', tip: 'Your resume gets you the interview. Your story gets you the job.' },
+        { id: 'unemployed', match: ['unemployed', 'laid off', 'fired', 'no job', 'jobless', 'lost job', 'can\'t find job', 'rejected', 'no response'], category: 'career', icon: '🆘', summary: 'Unemployed — bounce back stronger', steps: [
+            'Give yourself 3 days to process, then create a daily job-search routine',
+            'Treat job hunting as a job: 3-4 focused hours daily, Mon-Fri',
+            'Update resume, LinkedIn, and portfolio today — not tomorrow',
+            'Apply to 5-10 roles daily and track every application in a spreadsheet',
+            'Reach out to your network: most jobs come through connections, not applications',
+            'Upskill during gaps: a free course or project shows you stayed active'
+            ], mistakes: ['Applying to 100 jobs with the same resume', 'Isolating and not telling anyone you\'re looking', 'Taking rejection personally — it\'s a numbers game'], timeline: 'Structure in 1 week, interviews in 3-6 weeks, new role in 1-3 months', tip: 'A layoff is a detour, not a dead end. Use this time to aim better, not just faster.' },
+        // ═══════════════════════ MENTAL ═══════════════════════
+        { id: 'anxiety', match: ['anxiety', 'anxious', 'panic', 'panic attack', 'nervous', 'scared', 'fear', 'tense', 'worry', 'worrying', 'constant worry'], category: 'mental', icon: '🧘', summary: 'Anxiety — calm your mind with proven techniques', steps: [
+            'Learn the 4-7-8 breathing technique: inhale 4s, hold 7s, exhale 8s — repeat 4 rounds',
+            'Ground with 5-4-3-2-1: name 5 things you see, 4 you touch, 3 you hear, 2 you smell, 1 you taste',
+            'Write your worries down for 5 minutes — seeing them on paper shrinks them',
+            'Cut caffeine after noon and reduce screen time 1 hour before bed',
+            'Move your body for 15-20 minutes daily — even a walk shifts brain chemistry',
+            'If anxiety persists 2+ weeks daily, talk to a therapist — it\'s strength, not weakness'
+            ], mistakes: ['Suppressing anxious thoughts (they grow stronger)', 'Avoiding all anxiety triggers (makes the world smaller)', 'Self-medicating with alcohol or substances'], timeline: 'Coping tools ready in 1 week, calmer baseline in 4-6 weeks', tip: 'Anxiety is your brain\'s alarm system firing too often. Learn to check for real threats.' },
+        { id: 'burnout', match: ['burnout', 'burned out', 'burnt out', 'exhausted', 'no energy', 'drained', 'empty', 'can\'t go on', 'collapse'], category: 'mental', icon: '🔥', summary: 'Burnout recovery — refill your empty tank', steps: [
+            'Take an honest inventory: what\'s draining you vs what\'s energizing you?',
+            'Set a hard stop time for work each day — protect your recovery',
+            'Take at least 1 full day off per week with zero work communication',
+            'Delegate or decline one responsibility this week — you\'re not a machine',
+            'Revisit basic needs: sleep 7-8h, eat real food, get sunlight daily',
+            'If burnout is deep, consider professional support — burnout recovery isn\'t lazy'
+            ], mistakes: ['Pushing through with more caffeine and willpower', 'Taking a vacation but returning to the same overload', 'Blaming yourself instead of the unsustainable system'], timeline: 'Small relief in 1 week, real recovery in 4-8 weeks', tip: 'You can\'t pour from an empty cup. Refill yours first — everything else depends on it.' },
+        { id: 'low_motivation', match: ['motivation', 'unmotivated', 'no motivation', 'lazy', 'don\'t care', 'don\'t feel like', 'apathy', 'cant be bothered', 'pointless'], category: 'mental', icon: '🎯', summary: 'Low motivation — reignite your drive', steps: [
+            'Set one tiny goal you can accomplish today — motivation follows action',
+            'Change your environment: clean your desk, go to a café, rearrange your space',
+            'Use the 2-minute rule: if it takes less than 2 minutes, do it now',
+            'Connect the task to a bigger WHY — why does this matter to your future self?',
+            'Move your body for 10 minutes — physical motion creates mental momentum',
+            'Stop waiting to "feel like it." Start before motivation arrives — it comes after'
+            ], mistakes: ['Waiting for motivation to strike before starting', 'Setting 10 goals when you can barely do 1', 'Comparing your output to your peak performance'], timeline: 'First spark in 24 hours, consistent momentum in 2-3 weeks', tip: 'Motivation is not a feeling — it\'s a result. Act first, feel motivated second.' },
+        { id: 'overthinking', match: ['overthink', 'overthinking', 'overthinker', 'cant stop thinking', 'spiral', 'analysis paralysis', 'indecisive', 'cant decide', 'stuck in head'], category: 'mental', icon: '🌀', summary: 'Overthinking — break free from mental loops', steps: [
+            'Set a decision deadline: if the decision is small, decide in 2 minutes and move on',
+            'Write the options down and pick the one with the best next step — not the "perfect" one',
+            'Practice the 90-second rule: feelings last 90 seconds — let them pass without acting',
+            'Talk it out with someone — externalizing thoughts shrinks them',
+            'Limit information gathering: set a 15-minute research cap then decide',
+            'Ask: "Will this matter in 5 years?" If no, spend no more than 5 minutes on it'
+            ], mistakes: ['Confusing overthinking with being thorough', 'Replaying past decisions endlessly', 'Asking too many people for opinions'], timeline: 'Awareness in days, new patterns in 3-4 weeks', tip: 'A good decision now beats a perfect decision never. Act, learn, adjust.' },
+        { id: 'loneliness', match: ['lonely', 'loneliness', 'alone', 'no friends', 'isolated', 'no one cares', 'nobody', 'feel alone', 'no connection', 'social isolation'], category: 'mental', icon: '🫂', summary: 'Loneliness — rebuild human connection', steps: [
+            'Reach out to one person today — a text, a call, a coffee invite',
+            'Join one group activity: sports club, book club, volunteer group, online community',
+            'Schedule regular check-ins with existing friends — don\'t wait for them to reach out',
+            'Practice small talk: compliment a stranger, chat with a neighbor, talk to a barista',
+            'Be the initiator — most people are waiting for someone else to make the first move',
+            'If loneliness feels deep and persistent, a therapist can help unpack the root cause'
+            ], mistakes: ['Isolating further because reaching out feels hard', 'Confusing being alone with being lonely', 'Only seeking connection digitally — in-person matters more'], timeline: 'First connection in 1 week, social circle building in 1-3 months', tip: 'Loneliness is a signal, not a sentence. Your people are out there — take one step toward them.' },
+        { id: 'stress', match: ['stress', 'stressed', 'pressure', 'overload', 'workload', 'deadline stress', 'too much', 'overwhelm', 'overwhelmed'], category: 'mental', icon: '😤', summary: 'Stress management — lower the pressure', steps: [
+            'List your top 5 stressors and circle the ones you can actually control',
+            'For controllable stressors: take one small action on the biggest one today',
+            'For uncontrollable stressors: practice acceptance — "I can\'t control this, but I can control my response"',
+            'Protect 1 hour daily for true recovery (no screens, no work — walk, read, nap)',
+            'Use a brain dump: write everything on your mind before bed to clear mental RAM',
+            'If stress is chronic (weeks), re-examine your commitments and say no to one thing'
+            ], mistakes: ['Decompressing with more screen time (social media, Netflix)', 'Trying to fix everything at once', 'Ignoring physical symptoms: headaches, tension, insomnia'], timeline: 'Immediate relief with breathing, sustainable change in 3-4 weeks', tip: 'Stress is your body\'s emergency mode. Don\'t live there permanently.' },
+        // ═══════════════════════ RELATIONSHIPS ═══════════════════════
+        { id: 'communication', match: ['communication', 'cant talk', 'cant express', 'misunderstand', 'argument', 'fight', 'fighting', 'no listening', 'dont listen'], category: 'relationships', icon: '💬', summary: 'Communication issues — be heard and understood', steps: [
+            'Use "I feel..." instead of "You always..." — no blame, just your experience',
+            'Listen fully before responding — repeat back what you heard to confirm understanding',
+            'Choose calm moments for important talks — not during fights or when tired',
+            'Be specific: "I felt hurt when you did X" not "You\'re always like this"',
+            'Set a rule: no interrupting during serious conversations',
+            'If the same fight keeps repeating, consider couples counseling — it\'s not a last resort'
+            ], mistakes: ['Expecting them to read your mind', 'Bringing up 10 issues at once', 'Using sarcasm or name-calling when frustrated'], timeline: 'Better conversations in 1 week, deeper connection in 4-6 weeks', tip: 'Most relationship problems are communication problems in disguise.' },
+        { id: 'breakup', match: ['breakup', 'break up', 'broke up', 'ex', 'heartbreak', 'moved on', 'miss ex', 'get over', 'detached'], category: 'relationships', icon: '💔', summary: 'Breakup recovery — heal and move forward', steps: [
+            'Allow yourself to grieve — don\'t rush the healing or suppress the pain',
+            'Remove or archive all reminders: photos, texts, social media stalking',
+            'Rebuild your daily routine without them: new habits fill the empty spaces',
+            'Reconnect with friends and activities you neglected during the relationship',
+            'Write a letter you never send — express everything you need to say',
+            'When ready, reflect: what did you learn about yourself and what you need next time?'
+            ], mistakes: ['Stalking their social media daily', 'Rebounding immediately to avoid pain', 'Idealizing the relationship — remember why it ended'], timeline: 'Raw pain in 1-2 weeks, functioning normally in 1-2 months, fully healed in 3-6 months', tip: 'You\'re not losing someone — you\'re making room for someone better. Heal first.' },
+        { id: 'family', match: ['family', 'parents', 'mom', 'dad', 'brother', 'sister', 'sibling', 'family conflict', 'family issue', 'relative', 'family problem'], category: 'relationships', icon: '👨‍👩‍👧‍👦', summary: 'Family conflict — navigate blood ties wisely', steps: [
+            'Identify the specific issue — general "family problems" are harder to solve',
+            'Have a calm, private conversation with the person involved (not a group attack)',
+            'Set boundaries clearly: "I love you, but I can\'t do X anymore"',
+            'Accept that you can\'t change people — only change how you respond',
+            'Limit contact if the relationship is toxic — distance is not disrespect',
+            'Consider family counseling if the conflict affects your mental health'
+            ], mistakes: ['Trying to fix everyone', 'Taking sides in family drama', 'Ignoring your own needs to keep the peace'], timeline: 'Boundaries set in 1-2 weeks, relationship shift in 1-3 months', tip: 'You didn\'t choose your family, but you can choose how much access they have to your peace.' },
+        { id: 'social_skills', match: ['make friends', 'social skills', 'socialize', 'talk to people', 'shy', 'introvert', 'awkward', 'no friends', '社交', 'conversation'], category: 'relationships', icon: '🤝', summary: 'Social skills — build meaningful connections', steps: [
+            'Start small: make eye contact, smile, and greet one person daily',
+            'Ask open-ended questions — people love talking about themselves',
+            'Join one recurring group activity (sports, classes, volunteering) — consistency builds bonds',
+            'Be the person who follows up: "That was fun, let\'s do it again" within 48 hours',
+            'Share something about yourself — vulnerability builds connection',
+            'Accept that not everyone will click — and that\'s perfectly normal'
+            ], mistakes: ['Waiting for others to approach first', 'Only connecting online — in-person bonds deeper', 'Being a people-pleaser instead of being genuine'], timeline: 'First new connection in 1-2 weeks, friendships forming in 1-3 months', tip: 'Friendships are built through repeated unplanned interactions. Put yourself where people are.' },
+        // ═══════════════════════ EDUCATION ═══════════════════════
+        { id: 'exam_prep', match: ['exam', 'exams', 'test', 'finals', 'board exam', 'entrance exam', 'competitive exam', 'pass exam', 'exam preparation'], category: 'education', icon: '📝', summary: 'Exam prep — study smart, not just hard', steps: [
+            'Get the full syllabus and weightage — know what to prioritize',
+            'Create a reverse study plan: exam date minus 7 days = finish syllabus, last week = revision only',
+            'Use active recall: close the book and write/speak what you remember',
+            'Solve past papers under timed conditions — this is the closest to real practice',
+            'Teach a topic to someone (or pretend to) — if you can teach it, you know it',
+            'Sleep 7+ hours before the exam — sleep consolidates memory better than cramming'
+            ], mistakes: ['Reading the textbook cover-to-cover passively', 'Cramming all night before the exam', 'Studying easy topics for comfort, ignoring weak areas'], timeline: 'Knowledge gaps found in 1 week, exam-ready in 4-6 weeks', tip: 'The students who ace exams aren\'t smarter — they practice retrieving, not just reading.' },
+        { id: 'study_habits', match: ['study', 'studying', 'study habits', 'study more', 'study routine', 'study plan', 'cant study'], category: 'education', icon: '📖', summary: 'Study habits — build a system that works', steps: [
+            'Set a fixed study time and place — consistency trains your brain',
+            'Use Pomodoro: 25 min focused study + 5 min break, repeat 4x then take 20 min off',
+            'Start each session with a 2-minute review of yesterday\'s material',
+            'Use spaced repetition: review notes after 1 day, 3 days, 7 days, and 30 days',
+            'Handwrite key notes — it activates deeper memory than typing',
+            'End each session by writing 3 things you learned in your own words'
+            ], mistakes: ['Studying for hours without breaks (diminishing returns)', 'Highlighting passively instead of testing yourself', 'Multitasking with phone nearby'], timeline: 'Better focus in 1 week, improved retention in 2-3 weeks', tip: 'Study less, recall more. Active recall beats passive re-reading every time.' },
+        { id: 'focus_study', match: ['focus', 'concentrate', 'concentration', 'distracted', 'attention', 'cant focus', 'losing focus', 'mind wanders', 'distract'], category: 'education', icon: '🎯', summary: 'Focus problems — sharpen your concentration', steps: [
+            'Remove all distractions: phone in another room, notifications off, close extra tabs',
+            'Start with just 10 minutes of focused work — build up gradually',
+            'Use noise-cancelling headphones or brown noise/white noise',
+            'Before starting, write the ONE thing you\'ll work on — clarity kills distraction',
+            'Practice daily: 5 minutes of focused breathing trains attention like a muscle',
+            'If your mind wanders, gently bring it back — don\'t judge, just reset'
+            ], mistakes: ['Blaming "bad focus" instead of changing the environment', 'Starting with 2-hour focus sessions from zero', 'Checking your phone "for just a second"'], timeline: '10-min focus in 1 week, 45-60 min sessions in 4-6 weeks', tip: 'Focus isn\'t talent — it\'s a skill trained through eliminating distractions and practicing daily.' },
+        { id: 'new_skill', match: ['learn', 'learning', 'new skill', 'course', 'programming', 'language', 'certification', 'online course', 'self learn', 'teach myself'], category: 'education', icon: '🧠', summary: 'Learning a new skill — go from zero to capable', steps: [
+            'Define exactly what "good enough" looks like — don\'t aim for mastery on day 1',
+            'Find one structured resource: a course, tutorial series, or book — avoid 50 tabs',
+            'Spend 30-60 minutes daily on deliberate practice (not just watching)',
+            'Build something real as you learn: a project, a meal, a conversation — application beats theory',
+            'Join a community (Reddit, Discord, local group) — learning with others accelerates growth',
+            'Accept the "suck phase" — every expert was once terrible. Keep going.'
+            ], mistakes: ['Course-hopping without finishing any', 'Only consuming tutorials without practicing', 'Comparing your day 1 to someone else\'s year 5'], timeline: 'Basic competence in 2-4 weeks, useful skill in 2-3 months', tip: 'The best way to learn is to do. Stop planning and start creating, even badly.' },
+        // ═══════════════════════ HOME ═══════════════════════
+        { id: 'declutter', match: ['declutter', 'clutter', 'messy', 'too much stuff', 'junk', 'hoard', 'clean up', 'too many things', 'get rid'], category: 'home', icon: '🧹', summary: 'Decluttering — clear your space, clear your mind', steps: [
+            'Start with ONE small area: a drawer, a shelf, or one corner — not the whole house',
+            'Use the 4-box method: Keep / Donate / Trash / Relocate',
+            'If you haven\'t used it in 12 months, donate or trash it',
+            'One in, one out: for every new item, remove one old item',
+            'Set a timer for 15 minutes daily — small sessions beat weekend marathons',
+            'Don\'t organize clutter — remove it first, then organize what\'s left'
+            ], mistakes: ['Trying to declutter the entire house in one day', 'Keeping things "just in case" (you won\'t use them)', 'Buying storage containers before decluttering'], timeline: 'One zone cleared per day, noticeable home transformation in 2-4 weeks', tip: 'Clutter is postponed decisions. Every item you own is a tiny decision waiting to be made.' },
+        { id: 'moving', match: ['moving', 'move', 'new house', 'new apartment', 'relocating', 'shift', 'new place', 'settle in', 'unpack'], category: 'home', icon: '📦', summary: 'Moving to a new place — settle in smoothly', steps: [
+            'Make an essentials box: toiletries, chargers, 3 days of clothes, important documents',
+            'Unpack kitchen and bedroom FIRST — you need to eat and sleep from day 1',
+            'Deep clean the new place before moving furniture in — it\'s easier when empty',
+            'Set up utilities, internet, and address change within the first 48 hours',
+            'Explore the neighborhood: find grocery stores, hospitals, transit, and restaurants',
+            'Give yourself 2 weeks to feel at home — don\'t pressure yourself to have it perfect'
+            ], mistakes: ['Leaving everything in boxes for months', 'Not measuring furniture before moving day', 'Trying to set up everything perfectly in week 1'], timeline: 'Functional home in 1 week, fully settled in 2-4 weeks', tip: 'A new place doesn\'t feel like home on day one. Create routines, and home follows.' },
+        { id: 'daily_routine', match: ['routine', 'daily routine', 'daily habit', 'morning routine', 'night routine', 'schedule', 'no routine', 'structure', 'organized day'], category: 'home', icon: '⏰', summary: 'Daily routine — build a day that works for you', steps: [
+            'Anchor your day with 2 non-negotiable habits: one morning, one night',
+            'Write down your ideal day hour by hour — then adjust to be realistic',
+            'Batch similar tasks: all errands in one block, all admin in another',
+            'Protect a morning routine: wake up, hydrate, move, plan — no phone for 30 min',
+            'End each night by reviewing what you did and planning tomorrow\'s top 3 priorities',
+            'Follow the 80/20 rule: if your routine works 80% of days, it\'s a success'
+            ], mistakes: ['Creating a perfect routine you abandon in 3 days', 'Skipping weekends entirely (routines need consistency)', 'Not building in buffer time between tasks'], timeline: 'Structure felt in 3-5 days, solid routine in 3-4 weeks', tip: 'A simple routine done daily beats a complex one done rarely. Start small, stay consistent.' },
+        { id: 'cleaning', match: ['clean', 'cleaning', 'dirty', 'hygiene', 'housework', 'chores', 'tidy', 'dirty house', 'sparkle', 'deep clean'], category: 'home', icon: '🧽', summary: 'Cleaning habits — keep your space spotless', steps: [
+            'Do a 10-minute nightly tidy: reset every room before bed (dishes, surfaces, floor)',
+            'Follow the "clean as you cook" rule — kitchen stays manageable',
+            'Assign one deep-cleaning task per day (Monday = bathroom, Tuesday = floors, etc.)',
+            'Keep cleaning supplies in each room — reduce the friction to start',
+            'Do laundry in batches: wash, dry, fold, put away — don\'t leave piles',
+            'Play music or a podcast while cleaning — make it enjoyable, not a chore'
+            ], mistakes: ['Waiting until the mess is overwhelming', 'Buying expensive cleaning gadgets instead of building the habit', 'Cleaning for guests instead of for yourself'], timeline: 'Daily tidy in 1 week, whole-home maintenance in 2-3 weeks', tip: 'A clean home isn\'t about perfection — it\'s about small daily resets that prevent chaos.' },
     ];
 
     const CATEGORY_FALLBACK = {
@@ -370,13 +561,13 @@
     function guessCategory(text) {
         const low = text.toLowerCase();
         const checks = [
-            { cat: 'finance', words: ['money', 'save', 'budget', 'debt', 'salary', 'expense', 'bill', 'loan', 'rent'] },
-            { cat: 'health', words: ['health', 'fitness', 'weight', 'diet', 'exercise', 'gym', 'eat', 'sleep', 'pain', 'sick', 'fatigue'] },
-            { cat: 'career', words: ['job', 'work', 'career', 'interview', 'promotion', 'resume', 'boss', 'office', 'bussiness'] },
-            { cat: 'relationships', words: ['friend', 'family', 'girlfriend', 'boyfriend', 'wife', 'husband', 'parents', 'relationship', 'partner', 'marriage'] },
-            { cat: 'education', words: ['study', 'exam', 'school', 'college', 'learn', 'student', 'university', 'course', 'test'] },
-            { cat: 'home', words: ['home', 'house', 'room', 'kitchen', 'clean', 'tidy', 'organise', 'clutter', 'move', 'space'] },
-            { cat: 'mental', words: ['stress', 'anxiety', 'depress', 'sad', 'lonely', 'worry', 'scared', 'burnout', 'mood', 'motivat'] }
+            { cat: 'finance', words: ['money', 'save', 'savings', 'budget', 'debt', 'salary', 'expense', 'bill', 'loan', 'rent', 'income', 'earn', 'spend', 'overspend', 'impulse', 'credit', 'emi', 'repay', 'broke', 'poor'] },
+            { cat: 'health', words: ['health', 'fitness', 'weight', 'diet', 'exercise', 'gym', 'eat', 'eating', 'sleep', 'insomnia', 'pain', 'sick', 'fatigue', 'muscle', 'fat', 'belly', 'calories', 'meal', 'nutrition', 'junk food', 'workout'] },
+            { cat: 'career', words: ['job', 'work', 'career', 'interview', 'promotion', 'resume', 'boss', 'office', 'business', 'unemployed', 'laid off', 'fired', 'hired', 'quit', 'resign', 'salary raise', 'freelance', 'portfolio', 'linkedin'] },
+            { cat: 'relationships', words: ['friend', 'family', 'girlfriend', 'boyfriend', 'wife', 'husband', 'parents', 'relationship', 'partner', 'marriage', 'breakup', 'lonely', 'alone', 'social', 'communication', 'argument', 'fight'] },
+            { cat: 'education', words: ['study', 'studying', 'exam', 'school', 'college', 'learn', 'learning', 'student', 'university', 'course', 'test', 'focus', 'concentrate', 'homework', 'assignment', 'certification', 'programming', 'language'] },
+            { cat: 'home', words: ['home', 'house', 'room', 'kitchen', 'clean', 'cleaning', 'tidy', 'organise', 'clutter', 'declutter', 'move', 'moving', 'space', 'apartment', 'messy', 'routine', 'daily routine'] },
+            { cat: 'mental', words: ['stress', 'stressed', 'anxiety', 'anxious', 'depress', 'sad', 'lonely', 'worry', 'worrying', 'scared', 'panic', 'burnout', 'burned out', 'mood', 'motivation', 'unmotivated', 'overthink', 'overthinking', 'exhausted', 'drained'] }
         ];
         for (const c of checks) {
             for (const w of c.words) {
@@ -527,7 +718,7 @@
         const botName = getBotName();
         let html = '<p>👋 ' + (user ? 'Welcome back, <b>' + escapeHtml(user.name) + '</b>!' : 'Hi there! 😊') + '</p>';
         html += '<p>I\'m <b>' + escapeHtml(botName) + '</b>, your real-time roadmap provider. Tell me a daily life problem and I\'ll build a clear, step-by-step plan in seconds.</p>';
-        html += '<p class="hint-line">Try: "I want to save money", "I keep procrastinating", or type "who are you?" to learn about me 🙂</p>';
+        html += '<p class="hint-line">Try: "I can\'t save money", "I want to lose weight", "I feel anxious", "I can\'t focus studying", or type "who are you?" to learn more 🙂</p>';
         addAssistantMessage(html, true);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
@@ -543,13 +734,13 @@
     const CONFIDENTIAL_RE = /system prompt|your instructions|your (hidden )?code|source code|api key|secret|password|credentials|internal (info|details|systems)|how are you (built|made|developed)|how do you work (internally|technically|really)|reveal|bypass|settings|configuration|server|database|backend|storage|logs/i;
 
     const CATEGORY_DEFS = [
-        { emoji: '💰', name: 'Finance & Money', tags: 'saving, budgeting, debt, salary, bills, rent' },
-        { emoji: '❤️', name: 'Health & Fitness', tags: 'fitness, weight, diet, exercise, sleep, pain' },
-        { emoji: '💼', name: 'Career & Work', tags: 'job, interviews, promotion, resume, office' },
-        { emoji: '👥', name: 'Relationships', tags: 'friends, family, partner, marriage, parents' },
-        { emoji: '📚', name: 'Education & Study', tags: 'exams, school, college, learning, courses' },
-        { emoji: '🏠', name: 'Home & Routine', tags: 'cleaning, organizing, tidying, moving, space' },
-        { emoji: '🧠', name: 'Mental Wellbeing', tags: 'stress, anxiety, motivation, burnout, mood' }
+        { emoji: '💰', name: 'Finance & Money', tags: 'saving, budgeting, debt, salary, loans, impulse spending, income' },
+        { emoji: '❤️', name: 'Health & Fitness', tags: 'weight loss, muscle gain, eating healthy, sleep, fitness, energy' },
+        { emoji: '💼', name: 'Career & Work', tags: 'job switch, promotion, interview prep, resume, unemployed, freelance' },
+        { emoji: '👥', name: 'Relationships', tags: 'communication, breakup, family conflict, making friends, social skills' },
+        { emoji: '📚', name: 'Education & Study', tags: 'exam prep, study habits, focus, learning new skills, concentration' },
+        { emoji: '🏠', name: 'Home & Routine', tags: 'decluttering, moving, daily routine, cleaning habits, organization' },
+        { emoji: '🧠', name: 'Mental Wellbeing', tags: 'anxiety, stress, burnout, motivation, overthinking, loneliness' }
     ];
 
     function getUnsupportedReply() {
